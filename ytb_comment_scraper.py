@@ -30,15 +30,15 @@ YOUTUBE_COMMENTS_AJAX_URL = 'https://www.youtube.com/comment_service_ajax'
 
 USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.130 Safari/537.36'
 # csv file name
-FILE_NAME = 'ytb_comments.csv'
+FILE_NAME = 'comments.csv'
 
 # set parameters
 # filter comments by popularity or recent, 0:False, 1:True
-SORT_BY_POPULAR = 0
+SORT_BY_POPULAR = 1
 # default recent
-SORT_BY_RECENT = 1
+SORT_BY_RECENT = 0
 # set comment limit
-COMMENT_LIMIT = 100
+COMMENT_LIMIT = 100 # we train on the top 3,000 comments
 
 YT_CFG_RE = r'ytcfg\.set\s*\(\s*({.+?})\s*\)\s*;'
 YT_INITIAL_DATA_RE = r'(?:window\s*\[\s*["\']ytInitialData["\']\s*\]|ytInitialData)\s*=\s*({.+?})\s*;\s*(?:var\s+meta|</script|\n)'
@@ -159,7 +159,7 @@ def main(url):
 
         start_time = time.time()
 
-        for comment in download_comments(youtube_url):
+        for comment in download_comments(youtube_url, 1):
 
             df_comment = df_comment.append(comment, ignore_index=True)
 
@@ -192,7 +192,7 @@ def main(url):
 1. Dump comments to a csv  from a single video
 
 """
-# youtube_URL = 'https://www.youtube.com/watch?v=fucUDHaZ0Ug'
+# youtube_URL = 'https://www.youtube.com/watch?v=L_Guz73e6fw'
 # main(youtube_URL)
 
 """
@@ -226,10 +226,7 @@ https://www.youtube.com/watch?v=wTUM_4cVlE4
 """
 3. Dump to a csv from a a list with video links
 """
-ytb_video_list = ['https://www.youtube.com/watch?v=-t_uhBBDbA4',
-                  'https://www.youtube.com/watch?v=75vjjRza7IU',
-                  'https://www.youtube.com/watch?v=j6dmaPzOBHY',
-                  'https://www.youtube.com/watch?v=Yj2efyQV1RI']
+ytb_video_list = ['https://www.youtube.com/watch?v=L_Guz73e6fw']
 
 for video_link in ytb_video_list:
     main(video_link)
