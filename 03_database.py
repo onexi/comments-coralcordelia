@@ -25,7 +25,7 @@ cur.execute('''CREATE TABLE IF NOT EXISTS comments
               negative INTEGER,
               angry INTEGER,
               spam INTEGER,
-              response TEXT)''')
+              response INTEGER)''')
 
 # Insert data into the table
 rows_to_insert = [(comment['cid'], comment['text'], comment['time'], 
