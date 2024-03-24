@@ -8,12 +8,12 @@ openai.api_key = key
 con = sqlite3.connect('comments.db')
 cur = con.cursor()
 cur.execute("SELECT * FROM comments")
-comments = cur.fetchmany(size = 10)[1:]
+comments = cur.fetchmany(size = 1000)
 
 responses = []
 
 for ind, comment in enumerate(comments):
-    print(f'Current comment processed: Comment {ind + 1}: {comment[1]}')
+    print(f'Current comment being processed: Comment {ind + 1}')
     message_to_send = {
         "role": "user",
         "content": """I have a comment on a video about Sam Altman's interview concerning ChatGPT-4. 
@@ -39,7 +39,6 @@ If you're unsure, please try to err on assigning this as false.
         messages = [message_to_send])
     choice = response.choices[0].message.content.strip()
     responses.append((choice, comment))
-    print(f'Response: {choice}')
 
 
 cleaned_responses = [(json.loads(response), comment) for (response, comment) in responses]

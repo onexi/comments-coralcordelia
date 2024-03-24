@@ -1,6 +1,4 @@
 import openai
-import sqlite3
-import json
 
 key = "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"
 openai.api_key = key
