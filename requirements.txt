@@ -1,4 +1,3 @@
-sqlite3 == 3.45.2
 youtube_comment_downloader == 0.1.70
 openai == 1.14.2
 plotly.express == 0.4.1

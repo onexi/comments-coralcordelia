@@ -8,13 +8,14 @@ openai.api_key = key
 con = sqlite3.connect('comments.db')
 cur = con.cursor()
 cur.execute("SELECT * FROM comments")
-comments = cur.fetchmany(size = 100)
+comments = cur.fetchmany(size = 1000)
 
 combined_comments_and_responses = []
 
 for (ind, comment) in enumerate(comments):
+    if ind % 100 == 0:
+        print(f'Processed {ind} comments so far.')
     try:
-        print(f'Currently processing comment {ind}')
         message_to_send_to_ai = {
             "role": "user",
             "content": f"""
@@ -32,34 +33,39 @@ for (ind, comment) in enumerate(comments):
             model = "gpt-3.5-turbo",
             messages = [message_to_send_to_ai])
         response = message.choices[0].message.content.strip()
-        combined_comments_and_responses.append((json.loads(response), comment))
+        cleaned_response = json.loads(response)
+        assert isinstance(cleaned_response['ethical'], bool)
+        assert isinstance(cleaned_response['compliment'], bool)
+        assert isinstance(cleaned_response['personal'], bool)
+        assert isinstance(cleaned_response['hyperbolic'], bool)
+        assert isinstance(cleaned_response['interview'], bool)
+        combined_comments_and_responses.append((cleaned_response, comment))
     except:
-        print('Exception occured')
+        print(f'ChatGPT gave invalid response on comment {ind}')
 
-# cur.execute("""
-#     ALTER TABLE comments
-#     ADD ethical INT
-# """)
-# cur.execute("""
-#     ALTER TABLE comments
-#     ADD compliment INT
-# """)
-# cur.execute("""
-#     ALTER TABLE comments
-#     ADD personal INT
-# """)
-# cur.execute("""
-#     ALTER TABLE comments
-#     ADD hyperbolic INT
-# """)
-# cur.execute("""
-#     ALTER TABLE comments
-#     ADD interview INT
-# """)
+cur.execute("""
+    ALTER TABLE comments
+    ADD ethical INT
+""")
+cur.execute("""
+    ALTER TABLE comments
+    ADD compliment INT
+""")
+cur.execute("""
+    ALTER TABLE comments
+    ADD personal INT
+""")
+cur.execute("""
+    ALTER TABLE comments
+    ADD hyperbolic INT
+""")
+cur.execute("""
+    ALTER TABLE comments
+    ADD interview INT
+""")
 
 cur.executemany("""UPDATE comments
                 SET (ethical, compliment, personal, hyperbolic, interview) = (?, ?, ?, ?, ?)
                 WHERE cid = ?""", [(response['ethical'], response['compliment'], response['personal'], response['hyperbolic'], response['interview'], comment[0]) for (response, comment) in combined_comments_and_responses])
-
 
 con.commit()

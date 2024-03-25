@@ -1,19 +1,19 @@
 import openai
 import sqlite3
 
-size_processed = 100
-
 key = "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"
 openai.api_key = key
 
 con = sqlite3.connect('comments.db')
 cur = con.cursor()
 cur.execute("SELECT * FROM comments")
-comments = cur.fetchmany(size = 100)
+comments = cur.fetchmany(size = 1000)
 
 combined_comments_and_responses = []
 
 for ind, comment in enumerate(comments):
+    if ind % 100 == 0:
+        print(f'Processed {ind} comments so far.')
     if comment[13] == 1 or comment[13] == '1':
         try:
             message_to_send_to_ai = {
@@ -30,9 +30,8 @@ for ind, comment in enumerate(comments):
                 messages = [message_to_send_to_ai])
             response = message.choices[0].message.content.strip()
             combined_comments_and_responses.append((str(response), comment))
-            print(f'Currently processing comment {ind}')
         except:
-            pass
+            print(f'ChatGPT gave invalid response on comment {ind}')
 
 cur.execute("""
     ALTER TABLE comments
