@@ -1,0 +1,13 @@
+I have a comment on a video about Sam Altman's interview concerning ChatGPT-4. Please return a  JSON dictionary with keys "angry", "negative", "response", and "spam", with each key assigned to a boolean value, based on the following:
+To "angry", assign True if the comment is angry; otherwise, assign False. 
+To "negative", assign True if the comment is negative; otherwise, assign False. 
+To "response", assign True if the comment warrants a response; otherwise, assign False. For this one, please follow the following steps:
+1. Is the comment relevant to the interview?
+2. If so, does the comment express or ask for a meaningful point of view which facilitates discussion about AI?
+3. If so, does the comment's tone indicate a serious tone open to dialogue, as opposed to a sarcastic tone meant to make fun of Altman or the interview?
+4. Does the comment open a discussion? Many comments may make relevant remarks to the video, but not necessarily open a discussion.
+If any of these four are false, you should return False for the property "response."
+
+To "spam", assign True if the comment is irrelevant to the topics of AI, Lex Fridman's channel, and/or the interview.
+
+Here is the comment: (insert comment)

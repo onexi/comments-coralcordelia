@@ -1,7 +1,11 @@
 import openai
 import sqlite3
 import json
-
+"""
+Catagorizes comments into ethical (if a comment deals with ethical concerns), 
+compliments the inteviewer / Sam Altman, talks about Altman personally, contains
+hyperbolic language, or asks about the interview specifically.
+"""
 key = "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"
 openai.api_key = key
 

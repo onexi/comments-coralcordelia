@@ -1,6 +1,9 @@
 import openai
 import sqlite3
 import json
+"""
+Tries to classify comments to see if they're angry, negative, need a response, and spam. Does it for 1000 most recent comments.
+"""
 
 key = "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"
 openai.api_key = key

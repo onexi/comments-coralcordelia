@@ -1,5 +1,8 @@
 import openai
 import sqlite3
+"""
+Generating responses to select comments
+"""
 
 key = "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"
 openai.api_key = key

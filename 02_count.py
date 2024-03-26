@@ -1,5 +1,5 @@
 """
-02: Count the comments!
+02: Time to count the comments!
 """
 import json
 

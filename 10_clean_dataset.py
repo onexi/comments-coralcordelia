@@ -1,6 +1,8 @@
 import sqlite3
 import json
-
+"""
+Exports clean JSON file of the comments
+"""
 con = sqlite3.connect('comments.db')
 cur = con.cursor()
 cur.execute("SELECT * FROM comments")

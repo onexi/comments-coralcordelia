@@ -1,4 +1,8 @@
 import openai
+"""
+Pings OpenAI by asking it "How many states are there in the US?"
+"""
+
 
 key = "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"
 openai.api_key = key

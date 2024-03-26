@@ -1,5 +1,5 @@
 """
-01: We simply take 
+01: We simply take the comments straight from the video to clean_dataset by calling the terminal. This is useful for using terminal-only features, like limiting comment count.
 """
 
 # from itertools import islice

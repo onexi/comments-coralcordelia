@@ -1,6 +1,8 @@
 import sqlite3
 import json
-
+"""
+Turns comments into database format
+"""
 def open_file(file):
     with open(file, 'r') as infile:
         output = json.loads(infile.read())
